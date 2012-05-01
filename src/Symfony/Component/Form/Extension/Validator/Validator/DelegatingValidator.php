@@ -178,6 +178,10 @@ class DelegatingValidator implements FormValidatorInterface
             }
 
             if ($child->hasChildren()) {
+                if (!empty($namePath)) {
+                    $mapping['/^'.preg_quote($formPath.'.data.'.$parts[0]).'(?!\w)/'] = $child;
+                }
+
                 $this->buildFormPathMapping($child, $mapping, $nestedFormPath, $nestedNamePath);
             }
 

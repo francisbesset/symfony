@@ -249,6 +249,34 @@ class DelegatingValidatorTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testFormErrorsOnChildWithUniqueChoice()
+    {
+        $parent = $this->getForm();
+        $person = $this->getForm('person');
+        $gender = $this->getForm('gender');
+        $male   = $this->getForm('male');
+        $female = $this->getForm('female');
+
+        $parent->add($person);
+        $person->add($gender);
+        $gender->add($male);
+        $gender->add($female);
+
+        $this->delegate->expects($this->once())
+            ->method('validate')
+            ->will($this->returnValue(array(
+                $this->getConstraintViolation('children[person].data.gender')
+            )));
+
+        $this->validator->validate($parent);
+
+        $this->assertFalse($parent->hasErrors());
+        $this->assertFalse($person->hasErrors());
+        $this->assertEquals(array($this->getFormError()), $gender->getErrors());
+        $this->assertFalse($male->hasErrors());
+        $this->assertFalse($female->hasErrors());
+    }
+
     public function testDataErrorsOnForm()
     {
         $form = $this->getForm();
