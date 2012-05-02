@@ -1,3 +1,9 @@
+Personal CHANGELOG
+==================
+
+* e3cc2d0: [Form] Fixed DelegatingLoader to add an error on ChoiceType and BirthdayType
+
+
 CHANGELOG for 2.0.x
 ===================
 
