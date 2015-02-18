@@ -59,15 +59,16 @@ class PhpProcess extends Process
     /**
      * {@inheritdoc}
      */
-    public function start($callback = null)
+    public function getCommandLine()
     {
-        if (null === $this->getCommandLine()) {
+        if (null === $php = parent::getCommandLine()) {
             if (false === $php = $this->executableFinder->find()) {
                 throw new RuntimeException('Unable to find the PHP executable.');
             }
+
             $this->setCommandLine($php);
         }
 
-        parent::start($callback);
+        return $php;
     }
 }

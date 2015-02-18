@@ -229,7 +229,7 @@ class Process
         $this->callback = $this->buildCallback($callback);
         $descriptors = $this->getDescriptors();
 
-        $commandline = $this->commandline;
+        $commandline = $this->getCommandLine();
 
         if ('\\' === DIRECTORY_SEPARATOR && $this->enhanceWindowsCompatibility) {
             $commandline = 'cmd /V:ON /E:ON /C "('.$commandline.')';
